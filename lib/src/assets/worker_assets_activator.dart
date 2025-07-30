@@ -84,7 +84,7 @@ extension ActivatorExt on WorkerAssets {
               final rawConfig = getProperty(globalThis, 'appConfig');
               final config = JSObjectConverter.convertJSObjectToMap(rawConfig);
               final dir = config['cdn_base_dir']?.toString() ?? '';
-               return $TSquadron.uri('\${dir}$baseWorkerUrl.$ext');
+               return $TSquadron.uri('\$dir$baseWorkerUrl.$ext');
              } else {
                throw $TUnsupportedError('\${platform.label} not supported.');
              }
