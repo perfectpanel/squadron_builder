@@ -44,6 +44,13 @@ extension ActivatorExt on WorkerAssets {
       codeEvent.importSquadron(output, _squadronAlias);
       codeEvent.importDartCore(output, _dartCoreAlias);
       codeEvent.import(output, codeEvent.buildStep.inputId);
+      codeEvent.add(
+        output,
+        "import 'dart:js_util';",
+      );
+      codeEvent.add(output,
+          "import 'package:user_app/core/utils/js/js_object_converter.dart';", );
+
       codeEvent.addWebEntryPoint(
         output,
         '''/// Web entry point for $_name
@@ -75,7 +82,10 @@ extension ActivatorExt on WorkerAssets {
           output,
           '''$TEntryPoint \$get$_serviceActivator($TSquadronPlatformType platform) {
              if (platform.isWeb) {
-               return $TSquadron.uri('$baseWorkerUrl.$ext');
+              final rawConfig = getProperty(globalThis, 'appConfig');
+              final config = JSObjectConverter.convertJSObjectToMap(rawConfig);
+              final dir = config['cdn_base_dir']?.toString() ?? '';
+               return $TSquadron.uri('\${dir}$baseWorkerUrl.$ext');
              } else {
                throw $TUnsupportedError('\${platform.label} not supported.');
              }
