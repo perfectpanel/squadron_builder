@@ -106,6 +106,7 @@ class WorkerGenerator extends GeneratorForAnnotation<squadron.SquadronService> {
     final codeEvent = BuildStepCodeEvent(buildStep, libraryName);
     assets.generateVmCode(codeEvent);
     assets.generateWebCode(codeEvent);
+    assets.generateCrossPlatformCode(codeEvent);
     assets.generateActivatorCode(codeEvent);
     _buildStepEventStream.add(codeEvent);
 

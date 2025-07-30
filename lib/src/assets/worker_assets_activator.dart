@@ -81,6 +81,20 @@ extension ActivatorExt on WorkerAssets {
     }
   }
 
+  /// Stub
+  void generateCrossPlatformCode(BuildStepCodeEvent codeEvent) {
+    final output = _xplatOutput;
+    if (output != null && _vmOutput != null && _webOutput != null) {
+      codeEvent.importSquadron(output, _squadronAlias);
+      codeEvent.importDartCore(output, _dartCoreAlias);
+      codeEvent.add(
+        output,
+        unimpl(
+            '$TEntryPoint \$get$_serviceActivator($TSquadronPlatformType platform)'),
+      );
+    }
+  }
+
   /// VM
   void generateVmCode(BuildStepCodeEvent codeEvent) {
     final output = _vmOutput;
