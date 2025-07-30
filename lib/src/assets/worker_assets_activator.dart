@@ -23,20 +23,6 @@ extension ActivatorExt on WorkerAssets {
     }
   }
 
-  /// Stub
-  void generateCrossPlatformCode(BuildStepCodeEvent codeEvent) {
-    final output = _xplatOutput;
-    if (output != null && _vmOutput != null && _webOutput != null) {
-      codeEvent.importSquadron(output, _squadronAlias);
-      codeEvent.importDartCore(output, _dartCoreAlias);
-      codeEvent.add(
-        output,
-        unimpl(
-            '$TEntryPoint \$get$_serviceActivator($TSquadronPlatformType platform)'),
-      );
-    }
-  }
-
   /// Web
   void generateWebCode(BuildStepCodeEvent codeEvent) {
     final output = _webOutput;
@@ -84,7 +70,7 @@ extension ActivatorExt on WorkerAssets {
               final rawConfig = getProperty(globalThis, 'appConfig');
               final config = JSObjectConverter.convertJSObjectToMap(rawConfig);
               final dir = config['cdn_base_dir']?.toString() ?? '';
-               return $TSquadron.uri('\$dir$baseWorkerUrl.$ext');
+               return $TSquadron.uri('\${dir}$baseWorkerUrl.$ext');
              } else {
                throw $TUnsupportedError('\${platform.label} not supported.');
              }
