@@ -41,15 +41,18 @@ extension ActivatorExt on WorkerAssets {
   void generateWebCode(BuildStepCodeEvent codeEvent) {
     final output = _webOutput;
     if (output != null) {
-      codeEvent.importSquadron(output, _squadronAlias);
-      codeEvent.importDartCore(output, _dartCoreAlias);
-      codeEvent.import(output, codeEvent.buildStep.inputId);
       codeEvent.add(
         output,
         "import 'dart:js_util';",
       );
-      codeEvent.add(output,
-          "import 'package:user_app/core/utils/js/js_object_converter.dart';", );
+      codeEvent.add(
+        output,
+        "import 'package:user_app/core/utils/js/js_object_converter.dart';",
+      );
+      codeEvent.importSquadron(output, _squadronAlias);
+      codeEvent.importDartCore(output, _dartCoreAlias);
+
+      codeEvent.import(output, codeEvent.buildStep.inputId);
 
       codeEvent.addWebEntryPoint(
         output,
