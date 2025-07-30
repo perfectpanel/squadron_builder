@@ -154,6 +154,10 @@ class BuildStepCodeEvent extends BuildStepEvent {
     if (alias.isNotEmpty) _import(asset, 'dart:core', alias);
   }
 
+  void importDartSdk(AssetId asset, String lib) {
+    _import(asset, lib, '');
+  }
+
   void addWebEntryPoint(AssetId asset, String webEntryPoint) {
     final webEntryPoints = _webEntryPoints.putIfAbsent(asset, () => {});
     webEntryPoints.add(webEntryPoint);
